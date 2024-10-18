@@ -1,15 +1,10 @@
 {
   "custom_data": {
-    "serverless_functions_domain": "<YOUR_SERVERLESS_DOMAIN>",
+    "serverless_functions_domain": "custom-flex-extensions-serverless-3430-dev.twil.io",
     "common": {
       "log_level": "info",
       "audit_log_ttl": 1209600,
-      "teams": [
-        "Blue Team",
-        "Red Team",
-        "Gold Team",
-        "VIP Team"
-      ],
+      "teams": ["Blue Team", "Red Team", "Gold Team", "VIP Team"],
       "departments": [
         "General Management",
         "Marketing",
@@ -242,10 +237,7 @@
         "per_queue": {
           "exampleQueueName": {
             "require_disposition": true,
-            "dispositions": [
-              "Promotional Sale",
-              "Renewal"
-            ],
+            "dispositions": ["Promotional Sale", "Renewal"],
             "text_attributes": [],
             "select_attributes": []
           }
