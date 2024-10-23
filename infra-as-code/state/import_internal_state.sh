@@ -53,7 +53,7 @@ importInternalState() {
 	# END FEATURE: remove-all
 
 	# FEATURE: conversation-transfer
-	import_resource "$workflows" "Template Example Chat Transfer" "module.conversation-transfer.twilio_taskrouter_workspaces_workflows_v1.live_chat_transfer" "friendlyName"
+	import_resource "$workflows" "Live Chat Transfer" "module.conversation-transfer.twilio_taskrouter_workspaces_workflows_v1.live_chat_transfer" "friendlyName"
 	echo "   - :white_check_mark: conversation-transfer resources" >>$GITHUB_STEP_SUMMARY
 	# END FEATURE: conversation-transfer
 
@@ -100,6 +100,6 @@ if ! [ -f ../terraform/environments/default/terraform.tfstate ]; then
 	importInternalState
 fi
 
-terraform -chdir="../terraform/environments/default" apply -input=false -auto-approve -var-file="${ENVIRONMENT:-local}.tfvars"
+# terraform -chdir="../terraform/environments/default" apply -input=false -auto-approve -var-file="${ENVIRONMENT:-local}.tfvars"
 echo " - Applying terraform configuration complete" >>$GITHUB_STEP_SUMMARY
 echo "JOB_FAILED=false" >>"$GITHUB_OUTPUT"
