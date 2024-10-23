@@ -106,9 +106,9 @@ resource "twilio_taskrouter_workspaces_task_queues_v1" "support_voice_personaliz
   task_order = "FIFO"
 }
 
-resource "twilio_taskrouter_workspaces_task_queues_v1" "support_voice_personalized_support_engineer	" {
+resource "twilio_taskrouter_workspaces_task_queues_v1" "support_voice_personalized_support_engineer" {
   workspace_sid  = var.TWILIO_FLEX_WORKSPACE_SID
-  friendly_name  = "support_voice_personalized_support_engineer	"
+  friendly_name  = "support_voice_personalized_support_engineer"
   target_workers = "routing.skills HAS 'support_personalized_support_engineer'"
   max_reserved_workers = 1
   task_order = "FIFO"
