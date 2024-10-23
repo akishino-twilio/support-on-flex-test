@@ -5,37 +5,39 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import merge from 'lodash/merge.js';
 
-import { fillReplacementsForString } from "../scripts/common/fill-replacements.mjs";
-import printReplacements from "../scripts/common/print-replacements.mjs";
+import { fillReplacementsForString } from '../scripts/common/fill-replacements.mjs';
+import printReplacements from '../scripts/common/print-replacements.mjs';
 
-const regionUrl = process.env.TWILIO_REGION ? `${process.env.TWILIO_REGION}.twilio.com` : 'twilio.com';
-
-async function exists (path) {  
+async function exists(path) {
   try {
-    await fs.access(path)
-    return true
+    await fs.access(path);
+    return true;
   } catch {
-    return false
+    return false;
   }
 }
 
 (async () => {
-
   dotenv.config();
 
   [
-    "ENVIRONMENT",
-    "TWILIO_ACCOUNT_SID",
-    "TWILIO_API_KEY",
-    "TWILIO_API_SECRET",
+    'ENVIRONMENT',
+    'TWILIO_ACCOUNT_SID',
+    'TWILIO_API_KEY',
+    'TWILIO_API_SECRET',
   ].forEach((requiredEnvVar) => {
     if (!process.env[requiredEnvVar]) {
       throw new Error(`Missing env var "${requiredEnvVar}"`);
     }
   });
 
-  const { ENVIRONMENT, TWILIO_ACCOUNT_SID, TWILIO_API_KEY, TWILIO_API_SECRET, OVERWRITE_CONFIG } =
-    process.env;
+  const {
+    ENVIRONMENT,
+    TWILIO_ACCOUNT_SID,
+    TWILIO_API_KEY,
+    TWILIO_API_SECRET,
+    OVERWRITE_CONFIG,
+  } = process.env;
 
   deployConfigurationData({
     auth: {
@@ -68,51 +70,78 @@ async function deployConfigurationData({ auth, environment, overwrite }) {
     const envExists = await exists(envFileName);
 
     // first ensure environment specific file exists
-    if(!envExists){
+    if (!envExists) {
       try {
-        await fs.copyFile(defaultEnvFileName, envFileName)
+        await fs.copyFile(defaultEnvFileName, envFileName);
       } catch (error) {
-        console.log(`Error copying file ${defaultEnvFileName} to ${envFileName}: ${error}`);
+        console.log(
+          `Error copying file ${defaultEnvFileName} to ${envFileName}: ${error}`,
+        );
       }
     }
 
     // The env-specific file name may contain special characters that the URL interface encodes undesirably
-    const pathEnvFile = path.join(fileURLToPath(new URL('.', import.meta.url)), envFileName);
+    const pathEnvFile = path.join(
+      fileURLToPath(new URL('.', import.meta.url)),
+      envFileName,
+    );
     const uiAttributesEnvFile = await fs.readFile(pathEnvFile, 'utf8');
-    const uiAttributesCommonFile = await fs.readFile(new URL(commonFileName, import.meta.url), 'utf8');
-    const taskrouter_skills = JSON.parse(await fs.readFile(new URL(skillsFileName, import.meta.url), 'utf8'));
-    
-    console.log("Populating environmental configuration data...");
-    const uiAttributesEnvReplaced = await fillReplacementsForString(uiAttributesEnvFile, auth, environment);
-    const uiAttributesCommonReplaced = await fillReplacementsForString(uiAttributesCommonFile, auth, environment);
-    
+    const uiAttributesCommonFile = await fs.readFile(
+      new URL(commonFileName, import.meta.url),
+      'utf8',
+    );
+    const taskrouter_skills = JSON.parse(
+      await fs.readFile(new URL(skillsFileName, import.meta.url), 'utf8'),
+    );
+
+    console.log('Populating environmental configuration data...');
+    const uiAttributesEnvReplaced = await fillReplacementsForString(
+      uiAttributesEnvFile,
+      auth,
+      environment,
+    );
+    const uiAttributesCommonReplaced = await fillReplacementsForString(
+      uiAttributesCommonFile,
+      auth,
+      environment,
+    );
+
     printReplacements({
       ...uiAttributesCommonReplaced.envVars,
       ...uiAttributesEnvReplaced.envVars,
     });
 
-    console.log("Getting current configuration...");
+    console.log('Getting current configuration...');
     const {
       ui_attributes: uiAttributesCurrent,
-      taskrouter_skills: tr_current = "",
+      taskrouter_skills: tr_current = '',
     } = await getConfiguration({ auth });
 
-    console.log("Merging current configuraton with new configuration...");
+    console.log('Merging current configuraton with new configuration...');
     let uiAttributesMerged;
     const uiAttributesEnvJson = JSON.parse(uiAttributesEnvReplaced.data);
     const uiAttributesCommonJson = JSON.parse(uiAttributesCommonReplaced.data);
-    if (overwrite && overwrite.toLowerCase() === "true") {
+    if (overwrite && overwrite.toLowerCase() === 'true') {
       // when overwriting, clear out the existing custom_data object to remove obsolete values
       delete uiAttributesCurrent.custom_data;
-      uiAttributesMerged = merge(uiAttributesCurrent, uiAttributesCommonJson, uiAttributesEnvJson);
+      uiAttributesMerged = merge(
+        uiAttributesCurrent,
+        uiAttributesCommonJson,
+        uiAttributesEnvJson,
+      );
     } else {
-      uiAttributesMerged = merge({}, uiAttributesCommonJson, uiAttributesEnvJson, uiAttributesCurrent);
+      uiAttributesMerged = merge(
+        {},
+        uiAttributesCommonJson,
+        uiAttributesEnvJson,
+        uiAttributesCurrent,
+      );
     }
     const trskillsMerged = tr_current
       ? tr_current.concat(taskrouter_skills).unique()
       : taskrouter_skills;
 
-    console.log("Updating configuration...");
+    console.log('Updating configuration...');
     const configurationUpdated = await setConfiguration({
       auth,
       configurationChanges: {
@@ -121,36 +150,43 @@ async function deployConfigurationData({ auth, environment, overwrite }) {
       },
     });
 
+    console.log('Configuration updated.');
+    console.log('');
 
-    console.log("Configuration updated.");
-    console.log("");
-    
-    var readableFeatures = []
-    Object.entries(configurationUpdated.ui_attributes.custom_data.features).forEach( feature => {
-      { readableFeatures.push( { name: feature[0], enabled: feature[1].enabled}  )};
+    var readableFeatures = [];
+    Object.entries(
+      configurationUpdated.ui_attributes.custom_data.features,
+    ).forEach((feature) => {
+      {
+        readableFeatures.push({
+          name: feature[0],
+          enabled: feature[1].enabled,
+        });
+      }
     });
     var readableAttributes = configurationUpdated.ui_attributes;
     readableAttributes.custom_data.features = readableFeatures;
 
-    console.log("### UI attributes (reduced for readability):");
-    console.log("```");
+    console.log('### UI attributes (reduced for readability):');
+    console.log('```');
     console.dir(readableAttributes.custom_data, { depth: null });
-    console.log("```");
-    console.log("");
-    console.log("### TaskRouter skills:");
-    configurationUpdated.taskrouter_skills.forEach(element => {
+    console.log('```');
+    console.log('');
+    console.log('### TaskRouter skills:');
+    configurationUpdated.taskrouter_skills.forEach((element) => {
       console.log(`- ${element.name}`);
-    })
+    });
   } catch (error) {
-    console.error("Error caught:", error);
-    process.exitCode = 1;
+    console.error('Error caught:', error);
+    console.log('Auth', error.config?.auth);
+    console.log('Data', error.response?.data);
   }
 }
 
 async function getConfiguration({ auth }) {
   return axios({
-    method: "get",
-    url: `https://flex-api.${regionUrl}/v1/Configuration`,
+    method: 'get',
+    url: 'https://flex-api.twilio.com/v1/Configuration',
     auth: {
       username: auth.apiKey,
       password: auth.apiSecret,
@@ -160,8 +196,8 @@ async function getConfiguration({ auth }) {
 
 async function setConfiguration({ auth, configurationChanges }) {
   return axios({
-    method: "post",
-    url: `https://flex-api.${regionUrl}/v1/Configuration`,
+    method: 'post',
+    url: 'https://flex-api.twilio.com/v1/Configuration',
     auth: {
       username: auth.apiKey,
       password: auth.apiSecret,

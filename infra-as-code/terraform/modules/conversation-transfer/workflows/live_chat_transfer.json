@@ -1,0 +1,96 @@
+{
+  "task_routing": {
+    "filters": [
+      {
+        "filter_friendly_name": "Assign to Worker",
+        "expression": "transferTargetType == 'worker'",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_CHAT_LIVE_CHAT}",
+            "known_worker_sid": "task.transferTargetSid"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Assign to Queue - Everyone",
+        "expression": "transferQueueName == 'live_chat_transfer'",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_CHAT_LIVE_CHAT}",
+            "expression": "worker.sid NOT IN task.workerSidsInConversation"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Assign To Queue - Accounts Billing",
+        "expression": "transferQueueName == 'support_chat_accounts_billing'",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_CHAT_ACCOUNTS_BILLING}",
+            "expression": "worker.sid NOT IN task.workerSidsInConversation"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Assign To Queue - Billing",
+        "expression": "transferQueueName == 'support_chat_billing'",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_CHAT_BILLING}",
+            "expression": "worker.sid NOT IN task.workerSidsInConversation"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Assign To Queue - Email",
+        "expression": "transferQueueName == 'support_chat_email'",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_CHAT_EMAIL}",
+            "expression": "worker.sid NOT IN task.workerSidsInConversation"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Assign To Queue - Messaging",
+        "expression": "transferQueueName == 'support_chat_messaging'",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_CHAT_MESSAGING}",
+            "expression": "worker.sid NOT IN task.workerSidsInConversation"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Assign To Queue - Messaging Insights",
+        "expression": "transferQueueName == 'support_chat_messaging_insights'",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_CHAT_MESSAGING_INSIGHTS}",
+            "expression": "worker.sid NOT IN task.workerSidsInConversation"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Assign To Queue - Phone Numbers",
+        "expression": "transferQueueName == 'support_chat_phone_numbers'",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_CHAT_PHONE_NUMBERS}",
+            "expression": "worker.sid NOT IN task.workerSidsInConversation"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Assign To Queue - Voice",
+        "expression": "transferQueueName == 'support_chat_voice'",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_CHAT_VOICE}",
+            "expression": "worker.sid NOT IN task.workerSidsInConversation"
+          }
+        ]
+      }
+    ]
+  }
+}
