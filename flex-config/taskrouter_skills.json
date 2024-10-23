@@ -1,12 +1,56 @@
-[{
-  "minimum": null,
-  "multivalue": false,
-  "name": "template_example_support",
-  "maximum": null
-},
-{
-  "minimum": null,
-  "multivalue": false,
-  "name": "template_example_sales",
-  "maximum": null
-}]
+[
+  {
+    "minimum": 0,
+    "multivalue": false,
+    "name": "accounts_billing",
+    "maximum": 5
+  },
+  {
+    "minimum": 0,
+    "multivalue": false,
+    "name": "billing",
+    "maximum": 5
+  },
+  {
+    "minimum": 0,
+    "multivalue": false,
+    "name": "email",
+    "maximum": 5
+  },
+  {
+    "minimum": 0,
+    "multivalue": false,
+    "name": "messaging",
+    "maximum": 5
+  },
+  {
+    "minimum": 0,
+    "multivalue": false,
+    "name": "messaging_insights",
+    "maximum": 5
+  },
+  {
+    "minimum": 0,
+    "multivalue": false,
+    "name": "phone_numbers",
+    "maximum": 5
+  },
+  {
+    "minimum": 0,
+    "multivalue": false,
+    "name": "voice",
+    "maximum": 5
+  },
+  {
+    "minimum": null,
+    "multivalue": false,
+    "name": "personalized_support_engineer",
+    "maximum": null
+  },
+  {
+    "minimum": null,
+    "multivalue": false,
+    "name": "personalized_tam",
+    "maximum": null
+  }
+]
