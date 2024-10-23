@@ -34,13 +34,17 @@ module "conversation-transfer" {
   source = "../../modules/conversation-transfer"
 
   workspace_sid = var.TWILIO_FLEX_WORKSPACE_SID
+  everyone_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.template_example_everyone.sid
+  example_sales_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.template_example_sales.sid
+  example_support_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.template_example_support.sid
+
   support_chat_live_chat_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_chat_live_chat.sid
   support_chat_accounts_billing_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_chat_accounts_billing.sid
   support_chat_billing_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_chat_billing.sid
   support_chat_email_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_chat_email.sid
   support_chat_messaging_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_chat_messaging.sid
   support_chat_messaging_insights_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_chat_messaging_insights.sid
-  support_chat_phone_numbers_sid = twilio_taskrouter_workspaces_task_queues_v1.support_chat_phone_numbers.sid
+  support_chat_phone_numbers_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_chat_phone_numbers.sid
   support_chat_voice_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_chat_voice.sid
 }
 # END FEATURE: conversation-transfer

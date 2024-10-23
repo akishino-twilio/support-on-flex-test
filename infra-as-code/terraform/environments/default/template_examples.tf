@@ -42,42 +42,10 @@ resource "twilio_taskrouter_workspaces_task_queues_v1" "support_chat_live_chat" 
   task_order = "FIFO"
 }
 
-resource "twilio_taskrouter_workspaces_task_queues_v1" "support_chat_email" {
-  workspace_sid  = var.TWILIO_FLEX_WORKSPACE_SID
-  friendly_name  = "support_chat_email"
-  target_workers = "(routing.skills HAS 'email') OR (routing.skills HAS 'support_email')"
-  max_reserved_workers = 1
-  task_order = "FIFO"
-}
-
 resource "twilio_taskrouter_workspaces_task_queues_v1" "support_chat_accounts_billing" {
   workspace_sid  = var.TWILIO_FLEX_WORKSPACE_SID
   friendly_name  = "support_chat_accounts_billing"
   target_workers = "routing.skills HAS 'support_accounts_billing'"
-  max_reserved_workers = 1
-  task_order = "FIFO"
-}
-
-resource "twilio_taskrouter_workspaces_task_queues_v1" "support_chat_phone_numbers" {
-  workspace_sid  = var.TWILIO_FLEX_WORKSPACE_SID
-  friendly_name  = "support_chat_phone_numbers"
-  target_workers = "routing.skills HAS 'support_phone_numbers'"
-  max_reserved_workers = 1
-  task_order = "FIFO"
-}
-
-resource "twilio_taskrouter_workspaces_task_queues_v1" "support_chat_messaging" {
-  workspace_sid  = var.TWILIO_FLEX_WORKSPACE_SID
-  friendly_name  = "support_chat_messaging"
-  target_workers = "routing.skills HAS 'support_messaging'"
-  max_reserved_workers = 1
-  task_order = "FIFO"
-}
-
-resource "twilio_taskrouter_workspaces_task_queues_v1" "support_chat_voice" {
-  workspace_sid  = var.TWILIO_FLEX_WORKSPACE_SID
-  friendly_name  = "support_chat_voice"
-  target_workers = "routing.skills HAS 'support_voice'"
   max_reserved_workers = 1
   task_order = "FIFO"
 }
@@ -90,10 +58,42 @@ resource "twilio_taskrouter_workspaces_task_queues_v1" "support_chat_billing" {
   task_order = "FIFO"
 }
 
+resource "twilio_taskrouter_workspaces_task_queues_v1" "support_chat_email" {
+  workspace_sid  = var.TWILIO_FLEX_WORKSPACE_SID
+  friendly_name  = "support_chat_email"
+  target_workers = "(routing.skills HAS 'email') OR (routing.skills HAS 'support_email')"
+  max_reserved_workers = 1
+  task_order = "FIFO"
+}
+
+resource "twilio_taskrouter_workspaces_task_queues_v1" "support_chat_messaging" {
+  workspace_sid  = var.TWILIO_FLEX_WORKSPACE_SID
+  friendly_name  = "support_chat_messaging"
+  target_workers = "routing.skills HAS 'support_messaging'"
+  max_reserved_workers = 1
+  task_order = "FIFO"
+}
+
 resource "twilio_taskrouter_workspaces_task_queues_v1" "support_chat_messaging_insights" {
   workspace_sid  = var.TWILIO_FLEX_WORKSPACE_SID
   friendly_name  = "support_chat_messaging_insights"
   target_workers = "routing.skills HAS 'support_messaging_insights'"
+  max_reserved_workers = 1
+  task_order = "FIFO"
+}
+
+resource "twilio_taskrouter_workspaces_task_queues_v1" "support_chat_phone_numbers" {
+  workspace_sid  = var.TWILIO_FLEX_WORKSPACE_SID
+  friendly_name  = "support_chat_phone_numbers"
+  target_workers = "routing.skills HAS 'support_phone_numbers'"
+  max_reserved_workers = 1
+  task_order = "FIFO"
+}
+
+resource "twilio_taskrouter_workspaces_task_queues_v1" "support_chat_voice" {
+  workspace_sid  = var.TWILIO_FLEX_WORKSPACE_SID
+  friendly_name  = "support_chat_voice"
+  target_workers = "routing.skills HAS 'support_voice'"
   max_reserved_workers = 1
   task_order = "FIFO"
 }
