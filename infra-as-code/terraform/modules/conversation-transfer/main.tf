@@ -9,7 +9,7 @@ terraform {
 
 resource "twilio_taskrouter_workspaces_workflows_v1" "live_chat_transfer" {
   workspace_sid = var.workspace_sid
-  friendly_name = "live_chat_transfer"
+  friendly_name = "Live Chat Transfers"
   configuration = templatefile("${path.module}/workflows/live_chat_transfer.json", {
     "QUEUE_SID_EVERYONE" = var.everyone_queue_sid
     "QUEUE_SID_TEMPLATE_EXAMPLE_SALES" = var.example_sales_queue_sid

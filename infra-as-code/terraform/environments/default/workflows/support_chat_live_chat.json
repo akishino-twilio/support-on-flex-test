@@ -2,7 +2,7 @@
   "task_routing": {
     "filters": [
       {
-        "filter_friendly_name": "support_chat_email",
+        "filter_friendly_name": "Email",
         "expression": "(productCategory == 'email') OR (productCategory == 'support_email')",
         "targets": [
           {
@@ -11,7 +11,7 @@
         ]
       },
       {
-        "filter_friendly_name": "support_chat_accounts_billing",
+        "filter_friendly_name": "Accounts Billing",
         "expression": "productCategory == 'support_accounts_billing'",
         "targets": [
           {
@@ -20,7 +20,7 @@
         ]
       },
       {
-        "filter_friendly_name": "support_chat_phone_numbers",
+        "filter_friendly_name": "Phone Numbers",
         "expression": "productCategory == 'support_phone_numbers'",
         "targets": [
           {
@@ -29,7 +29,7 @@
         ]
       },
       {
-        "filter_friendly_name": "support_chat_messaging",
+        "filter_friendly_name": "Messaging",
         "expression": "productCategory == 'support_messaging'",
         "targets": [
           {
@@ -38,7 +38,7 @@
         ]
       },
       {
-        "filter_friendly_name": "support_chat_voice",
+        "filter_friendly_name": "Voice",
         "expression": "productCategory == 'support_voice'",
         "targets": [
           {
@@ -47,7 +47,7 @@
         ]
       },
       {
-        "filter_friendly_name": "support_chat_billing",
+        "filter_friendly_name": "Billing",
         "expression": "productCategory == 'support_billing'",
         "targets": [
           {
@@ -56,7 +56,7 @@
         ]
       },
       {
-        "filter_friendly_name": "support_chat_messaging_insights",
+        "filter_friendly_name": "Messaging Insights",
         "expression": "productCategory == 'support_messaging_insights'",
         "targets": [
           {

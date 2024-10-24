@@ -13,7 +13,7 @@
       },
       {
         "filter_friendly_name": "Assign to Queue - Everyone",
-        "expression": "transferQueueName == 'live_chat_transfer'",
+        "expression": "transferQueueName == 'Live Chat (Everyone)'",
         "targets": [
           {
             "queue": "${QUEUE_SID_SUPPORT_CHAT_LIVE_CHAT}",
@@ -23,7 +23,7 @@
       },
       {
         "filter_friendly_name": "Assign To Queue - Accounts Billing",
-        "expression": "transferQueueName == 'support_chat_accounts_billing'",
+        "expression": "transferQueueName == 'Accounts Billing'",
         "targets": [
           {
             "queue": "${QUEUE_SID_SUPPORT_CHAT_ACCOUNTS_BILLING}",
@@ -33,7 +33,7 @@
       },
       {
         "filter_friendly_name": "Assign To Queue - Billing",
-        "expression": "transferQueueName == 'support_chat_billing'",
+        "expression": "transferQueueName == 'Billing'",
         "targets": [
           {
             "queue": "${QUEUE_SID_SUPPORT_CHAT_BILLING}",
@@ -43,7 +43,7 @@
       },
       {
         "filter_friendly_name": "Assign To Queue - Email",
-        "expression": "transferQueueName == 'support_chat_email'",
+        "expression": "transferQueueName == 'Email'",
         "targets": [
           {
             "queue": "${QUEUE_SID_SUPPORT_CHAT_EMAIL}",
@@ -53,7 +53,7 @@
       },
       {
         "filter_friendly_name": "Assign To Queue - Messaging",
-        "expression": "transferQueueName == 'support_chat_messaging'",
+        "expression": "transferQueueName == 'Messaging'",
         "targets": [
           {
             "queue": "${QUEUE_SID_SUPPORT_CHAT_MESSAGING}",
@@ -63,7 +63,7 @@
       },
       {
         "filter_friendly_name": "Assign To Queue - Messaging Insights",
-        "expression": "transferQueueName == 'support_chat_messaging_insights'",
+        "expression": "transferQueueName == 'Messaging Insights'",
         "targets": [
           {
             "queue": "${QUEUE_SID_SUPPORT_CHAT_MESSAGING_INSIGHTS}",
@@ -73,7 +73,7 @@
       },
       {
         "filter_friendly_name": "Assign To Queue - Phone Numbers",
-        "expression": "transferQueueName == 'support_chat_phone_numbers'",
+        "expression": "transferQueueName == 'Phone Numbers'",
         "targets": [
           {
             "queue": "${QUEUE_SID_SUPPORT_CHAT_PHONE_NUMBERS}",
@@ -83,7 +83,7 @@
       },
       {
         "filter_friendly_name": "Assign To Queue - Voice",
-        "expression": "transferQueueName == 'support_chat_voice'",
+        "expression": "transferQueueName == 'Voice'",
         "targets": [
           {
             "queue": "${QUEUE_SID_SUPPORT_CHAT_VOICE}",
