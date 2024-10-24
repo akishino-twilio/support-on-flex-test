@@ -100,6 +100,10 @@ if ! [ -f ../terraform/environments/default/terraform.tfstate ]; then
 	importInternalState
 fi
 
-terraform -chdir="../terraform/environments/default" apply -input=false -auto-approve -var-file="${ENVIRONMENT:-local}.tfvars" -parallelism=1
+terraform -chdir="../terraform/environments/default" apply -input=false -auto-approve -var-file="${ENVIRONMENT:-local}.tfvars" -parallelism=1 || {
+	echo " - Applying terraform configuration failed" >>$GITHUB_STEP_SUMMARY
+	echo "JOB_FAILED=true" >>"$GITHUB_OUTPUT"
+	exit 0
+}
 echo " - Applying terraform configuration complete" >>$GITHUB_STEP_SUMMARY
 echo "JOB_FAILED=false" >>"$GITHUB_OUTPUT"
