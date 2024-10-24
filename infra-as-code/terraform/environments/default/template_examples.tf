@@ -125,7 +125,7 @@ resource "twilio_taskrouter_workspaces_task_queues_v1" "support_voicemail_person
 
 resource "twilio_taskrouter_workspaces_workflows_v1" "support_chat_live_chat" {
   workspace_sid = var.TWILIO_FLEX_WORKSPACE_SID
-  friendly_name = "support_chat_live_chat"
+  friendly_name = "Support Live Chat"
   configuration = templatefile("workflows/support_chat_live_chat.json", {
     "QUEUE_SID_SUPPORT_CHAT_LIVE_CHAT" = twilio_taskrouter_workspaces_task_queues_v1.support_chat_live_chat.sid
     "QUEUE_SID_SUPPORT_CHAT_EMAIL" = twilio_taskrouter_workspaces_task_queues_v1.support_chat_email.sid
