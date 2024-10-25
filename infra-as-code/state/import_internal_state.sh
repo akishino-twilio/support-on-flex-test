@@ -130,7 +130,7 @@ while [ $count -lt $retries ]; do
 	delay=$((delay + 5))
 done
 
-echo "::warning::Applying terraform configuration failed after $retries attempts" >>$GITHUB_STEP_SUMMARY
+echo " - Applying terraform configuration failed after $retries attempts" >>$GITHUB_STEP_SUMMARY
 echo "JOB_FAILED=true" >>"$GITHUB_OUTPUT"
 
 # Re-enable immediate exit on error
