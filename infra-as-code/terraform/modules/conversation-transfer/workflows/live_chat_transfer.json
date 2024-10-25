@@ -22,8 +22,8 @@
         ]
       },
       {
-        "filter_friendly_name": "Assign To Queue - Accounts Billing",
-        "expression": "transferQueueName == 'Accounts Billing'",
+        "filter_friendly_name": "Assign To Queue - Account Administration",
+        "expression": "transferQueueName == 'Account Administration'",
         "targets": [
           {
             "queue": "${QUEUE_SID_SUPPORT_CHAT_ACCOUNTS_BILLING}",
