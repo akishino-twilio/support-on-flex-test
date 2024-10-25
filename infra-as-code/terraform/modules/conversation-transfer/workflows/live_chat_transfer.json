@@ -6,7 +6,7 @@
         "expression": "transferTargetType == 'worker'",
         "targets": [
           {
-            "queue": "${QUEUE_SID_SUPPORT_CHAT_LIVE_CHAT}",
+            "queue": "${QUEUE_SID_SUPPORT_EVERYONE}",
             "known_worker_sid": "task.transferTargetSid"
           }
         ]
@@ -16,7 +16,7 @@
         "expression": "transferQueueName == 'Live Chat (Everyone)'",
         "targets": [
           {
-            "queue": "${QUEUE_SID_SUPPORT_CHAT_LIVE_CHAT}",
+            "queue": "${QUEUE_SID_SUPPORT_EVERYONE}",
             "expression": "worker.sid NOT IN task.workerSidsInConversation"
           }
         ]

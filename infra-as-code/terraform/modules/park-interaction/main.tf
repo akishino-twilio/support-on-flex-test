@@ -26,7 +26,7 @@ resource "twilio_studio_flows_v2" "messaging_with_parking_flow" {
   friendly_name  = "Messaging with Parking Flow"
   status         = "published"
   definition     = templatefile("${path.module}/flows/messaging_with_parking_flow.json", {
-    "CHAT_CHANNEL_SID" = twilio_taskrouter_workspaces_task_channels_v1.chat.sid
+    "CHAT_CHANNEL_SID" = var.chat_channel_sid
     "WORKFLOW_SID" = twilio_taskrouter_workspaces_workflows_v1.park_resume.sid
   })
 }

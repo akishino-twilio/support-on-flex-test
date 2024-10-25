@@ -78,3 +78,12 @@ variable "support_voice_queue_sid" {
     error_message = "support_voice_queue_sid expected to start with \"WQ\"."
   }
 }
+
+variable "chat_channel_sid" {
+  type        = string
+  description = "SID of chat channel"
+  validation {
+    condition     = length(var.chat_channel_sid) > 2 && substr(var.chat_channel_sid, 0, 2) == "TC"
+    error_message = "chat_channel_sid expected to start with \"TC\"."
+  }
+}

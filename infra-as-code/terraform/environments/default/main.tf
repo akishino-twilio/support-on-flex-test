@@ -4,6 +4,12 @@ resource "twilio_taskrouter_workspaces_task_channels_v1" "voice" {
   friendly_name	= "Voice"
   unique_name = "voice"
 }
+
+resource "twilio_taskrouter_workspaces_task_channels_v1" "chat" {
+  workspace_sid	= var.TWILIO_FLEX_WORKSPACE_SID
+  friendly_name	= "Chat"
+  unique_name = "chat"
+}
 # END FEATURE: remove-all
 
 # FEATURE: activity-reservation-handler
@@ -66,6 +72,7 @@ module "park-interaction" {
   source = "../../modules/park-interaction"
 
   workspace_sid = var.TWILIO_FLEX_WORKSPACE_SID
+  chat_channel_sid = twilio_taskrouter_workspaces_task_channels_v1.chat.sid
   support_everyone_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_everyone.sid
   support_accounts_billing_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_accounts_billing.sid
   support_billing_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_billing.sid
@@ -83,7 +90,7 @@ module "schedule-manager" {
 
   voice_channel_sid = twilio_taskrouter_workspaces_task_channels_v1.voice.sid
   # [TODO] Update this workflow SID to the correct workflow for voice calls
-  workflow_sid = twilio_taskrouter_workspaces_workflows_v1.support_chat_live_chat.sid
+  workflow_sid = twilio_taskrouter_workspaces_workflows_v1.support_live_chat.sid
 
   schedule_manager_domain = var.SCHEDULE_MANAGER_DOMAIN
   schedule_manager_sid = var.SCHEDULE_MANAGER_SID
