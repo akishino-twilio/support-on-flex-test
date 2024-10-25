@@ -116,20 +116,20 @@ log_file="terraform_apply.log"
 set +e
 
 ### terraform apply may fail due to rate limits when creating new resources. Retrying if it fails
-while [ $count -lt $retries ]; do
-	terraform -chdir="../terraform/environments/default" apply -input=false -auto-approve -var-file="${ENVIRONMENT:-local}.tfvars" -parallelism=1
-	exit_status=$?
+# while [ $count -lt $retries ]; do
+terraform -chdir="../terraform/environments/default" apply -input=false -auto-approve -var-file="${ENVIRONMENT:-local}.tfvars" -parallelism=1
+exit_status=$?
 
-	if [ $exit_status -eq 0 ]; then
-		echo " - Applying terraform configuration complete" >>$GITHUB_STEP_SUMMARY
-		echo "JOB_FAILED=false" >>"$GITHUB_OUTPUT"
-		exit 0
-	fi
-	echo " - Terraform apply failed. Retrying in $delay seconds..." >>$GITHUB_STEP_SUMMARY
-	sleep $delay
-	count=$((count + 1))
-	delay=$((delay * 2))
-done
+if [ $exit_status -eq 0 ]; then
+	echo " - Applying terraform configuration complete" >>$GITHUB_STEP_SUMMARY
+	echo "JOB_FAILED=false" >>"$GITHUB_OUTPUT"
+	exit 0
+fi
+# echo " - Terraform apply failed. Retrying in $delay seconds..." >>$GITHUB_STEP_SUMMARY
+# sleep $delay
+# count=$((count + 1))
+# delay=$((delay * 2))
+# done
 
 echo "Applying terraform configuration failed after $retries attempts" >>$GITHUB_STEP_SUMMARY
 echo "JOB_FAILED=true" >>"$GITHUB_OUTPUT"
