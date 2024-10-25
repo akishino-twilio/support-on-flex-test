@@ -1,10 +1,3 @@
-### Support on Flex Task Channels ###
-resource "twilio_taskrouter_workspaces_task_channels_v1" "chat" {
-  workspace_sid	= var.TWILIO_FLEX_WORKSPACE_SID
-  friendly_name	= "Chat"
-  unique_name = "chat"
-}
-
 ### Support on Flex Task Queues ###
 resource "twilio_taskrouter_workspaces_task_queues_v1" "support_everyone" {
   workspace_sid  = var.TWILIO_FLEX_WORKSPACE_SID
