@@ -1,0 +1,168 @@
+{
+  "task_routing": {
+    "filters": [
+      {
+        "filter_friendly_name": "Route Back To Agent->Account Administration (Park Interaction)",
+        "expression": "originalRouting.queueName == \"Account Administration\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_EVERYONE}",
+            "known_worker_sid": "task.originalRouting.workerSid",
+            "timeout": 30
+          },
+          {}
+        ]
+      },
+      {
+        "filter_friendly_name": "Route Back To Agent->Billing (Park Interaction)",
+        "expression": "originalRouting.queueName == \"Billing\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_BILLING}",
+            "known_worker_sid": "task.originalRouting.workerSid",
+            "timeout": 30
+          },
+          {}
+        ]
+      },
+      {
+        "filter_friendly_name": "Route Back To Agent->Email (Park Interaction)",
+        "expression": "originalRouting.queueName == \"Email\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_EMAIL}",
+            "known_worker_sid": "task.originalRouting.workerSid",
+            "timeout": 30
+          },
+          {}
+        ]
+      },
+      {
+        "filter_friendly_name": "Route Back To Agent->Messaging (Park Interaction)",
+        "expression": "originalRouting.queueName == \"Messaging\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_MESSAGING}",
+            "known_worker_sid": "task.originalRouting.workerSid",
+            "timeout": 30
+          },
+          {}
+        ]
+      },
+      {
+        "filter_friendly_name": "Route Back To Agent->Messaging Insights (Park Interaction)",
+        "expression": "originalRouting.queueName == \"Messaging Insights\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_MESSAGING_INSIGHTS}",
+            "known_worker_sid": "task.originalRouting.workerSid",
+            "timeout": 30
+          },
+          {}
+        ]
+      },
+      {
+        "filter_friendly_name": "Route Back To Agent->Messaging Insights (Park Interaction)",
+        "expression": "originalRouting.queueName == \"Messaging Insights\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_MESSAGING_INSIGHTS}",
+            "known_worker_sid": "task.originalRouting.workerSid",
+            "timeout": 30
+          },
+          {}
+        ]
+      },
+      {
+        "filter_friendly_name": "Route Back To Agent->Phone Numbers (Park Interaction)",
+        "expression": "originalRouting.queueName == \"Phone Numbers\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_PHONE_NUMBERS}",
+            "known_worker_sid": "task.originalRouting.workerSid",
+            "timeout": 30
+          },
+          {}
+        ]
+      },
+      {
+        "filter_friendly_name": "Route Back To Agent->Voice (Park Interaction)",
+        "expression": "originalRouting.queueName == \"Voice\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_VOICE}",
+            "known_worker_sid": "task.originalRouting.workerSid",
+            "timeout": 30
+          },
+          {}
+        ]
+      },
+      {
+        "filter_friendly_name": "Route To Account Administration",
+        "expression": "ivr_queue == \"support_accounts_billing\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_ACCOUNT_ADMINISTRATION}"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Route To Billing",
+        "expression": "ivr_queue == \"support_billing\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_BILLING}"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Route To Email",
+        "expression": "ivr_queue == \"support_email\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_EMAIL}"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Route To Messaging",
+        "expression": "ivr_queue == \"support_messaging\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_MESSAGING}"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Route To Messaging Insights",
+        "expression": "ivr_queue == \"support_messaging_insights\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_MESSAGING_INSIGHTS}"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Route To Phone Numbers",
+        "expression": "ivr_queue == \"support_phone_numbers\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_PHONE_NUMBERS}"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Route To Voice",
+        "expression": "ivr_queue == \"support_voice\"",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_VOICE}"
+          }
+        ]
+      }
+    ],
+    "default_filter": {
+      "queue": "${QUEUE_SID_SUPPORT_EVERYONE}"
+    }
+  }
+}
