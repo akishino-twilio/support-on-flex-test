@@ -26,7 +26,7 @@
         "expression": "transferQueueName == 'Account Administration'",
         "targets": [
           {
-            "queue": "${QUEUE_SID_SUPPORT_CHAT_ACCOUNTS_BILLING}",
+            "queue": "${QUEUE_SID_SUPPORT_ACCOUNT_ADMINISTRATION}",
             "expression": "worker.sid NOT IN task.workerSidsInConversation"
           }
         ]
@@ -36,7 +36,7 @@
         "expression": "transferQueueName == 'Billing'",
         "targets": [
           {
-            "queue": "${QUEUE_SID_SUPPORT_CHAT_BILLING}",
+            "queue": "${QUEUE_SID_SUPPORT_BILLING}",
             "expression": "worker.sid NOT IN task.workerSidsInConversation"
           }
         ]
@@ -46,7 +46,7 @@
         "expression": "transferQueueName == 'Email'",
         "targets": [
           {
-            "queue": "${QUEUE_SID_SUPPORT_CHAT_EMAIL}",
+            "queue": "${QUEUE_SID_SUPPORT_EMAIL}",
             "expression": "worker.sid NOT IN task.workerSidsInConversation"
           }
         ]
@@ -56,7 +56,7 @@
         "expression": "transferQueueName == 'Messaging'",
         "targets": [
           {
-            "queue": "${QUEUE_SID_SUPPORT_CHAT_MESSAGING}",
+            "queue": "${QUEUE_SID_SUPPORT_MESSAGING}",
             "expression": "worker.sid NOT IN task.workerSidsInConversation"
           }
         ]
@@ -66,7 +66,7 @@
         "expression": "transferQueueName == 'Messaging Insights'",
         "targets": [
           {
-            "queue": "${QUEUE_SID_SUPPORT_CHAT_MESSAGING_INSIGHTS}",
+            "queue": "${QUEUE_SID_SUPPORT_MESSAGING_INSIGHTS}",
             "expression": "worker.sid NOT IN task.workerSidsInConversation"
           }
         ]
@@ -76,7 +76,7 @@
         "expression": "transferQueueName == 'Phone Numbers'",
         "targets": [
           {
-            "queue": "${QUEUE_SID_SUPPORT_CHAT_PHONE_NUMBERS}",
+            "queue": "${QUEUE_SID_SUPPORT_PHONE_NUMBERS}",
             "expression": "worker.sid NOT IN task.workerSidsInConversation"
           }
         ]
@@ -86,7 +86,7 @@
         "expression": "transferQueueName == 'Voice'",
         "targets": [
           {
-            "queue": "${QUEUE_SID_SUPPORT_CHAT_VOICE}",
+            "queue": "${QUEUE_SID_SUPPORT_VOICE}",
             "expression": "worker.sid NOT IN task.workerSidsInConversation"
           }
         ]
