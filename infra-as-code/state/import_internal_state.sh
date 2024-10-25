@@ -109,13 +109,14 @@ fi
 
 retries=3
 count=0
-delay=5
+delay=0
 
 # Disable immediate exit on error
 set +e
 
 ### terraform apply may fail due to rate limits when creating new resources. Retrying if it fails
 while [ $count -lt $retries ]; do
+	sleep $delay
 	terraform -chdir="../terraform/environments/default" apply -input=false -auto-approve -var-file="${ENVIRONMENT:-local}.tfvars" -parallelism=1
 	exit_status=$?
 
@@ -125,9 +126,8 @@ while [ $count -lt $retries ]; do
 		exit 0
 	fi
 	echo " - Terraform apply failed. Retrying in $delay seconds..." >>$GITHUB_STEP_SUMMARY
-	sleep $delay
 	count=$((count + 1))
-	delay=$((delay * 2))
+	delay=$((delay + 5))
 done
 
 echo "::warning::Applying terraform configuration failed after $retries attempts" >>$GITHUB_STEP_SUMMARY
