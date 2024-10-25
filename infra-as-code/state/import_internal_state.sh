@@ -44,10 +44,19 @@ importInternalState() {
 	flows=$(npx twilio api:studio:v2:flows:list --no-limit -o json)
 
 	# FEATURE: remove-all
-	import_resource "$workflows" "Template Example Assign to Anyone" "twilio_taskrouter_workspaces_workflows_v1.template_example_assign_to_anyone" "friendlyName"
-	import_resource "$queues" "Template Example Everyone" "twilio_taskrouter_workspaces_task_queues_v1.template_example_everyone" "friendlyName"
-	import_resource "$queues" "Template Example Sales" "twilio_taskrouter_workspaces_task_queues_v1.template_example_sales" "friendlyName"
-	import_resource "$queues" "Template Example Support" "twilio_taskrouter_workspaces_task_queues_v1.template_example_support" "friendlyName"
+	import_resource "$workflows" "Support Live Chat" "twilio_taskrouter_workspaces_workflows_v1.support_live_chat" "friendlyName"
+	import_resource "$queues" "Everyone" "twilio_taskrouter_workspaces_task_queues_v1.support_everyone" "friendlyName"
+	import_resource "$queues" "Account Administration" "twilio_taskrouter_workspaces_task_queues_v1.support_accounts_billing" "friendlyName"
+	import_resource "$queues" "Billing" "twilio_taskrouter_workspaces_task_queues_v1.support_billing" "friendlyName"
+	import_resource "$queues" "Email" "twilio_taskrouter_workspaces_task_queues_v1.support_email" "friendlyName"
+	import_resource "$queues" "Messaging" "twilio_taskrouter_workspaces_task_queues_v1.support_messaging" "friendlyName"
+	import_resource "$queues" "Messaging Insights" "twilio_taskrouter_workspaces_task_queues_v1.support_messaging_insights" "friendlyName"
+	import_resource "$queues" "Phone Numbers" "twilio_taskrouter_workspaces_task_queues_v1.support_phone_numbers" "friendlyName"
+	import_resource "$queues" "Voice" "twilio_taskrouter_workspaces_task_queues_v1.support_voice" "friendlyName"
+	import_resource "$queues" "Personalized TAM" "twilio_taskrouter_workspaces_task_queues_v1.support_personalized_tam" "friendlyName"
+	import_resource "$queues" "Personalized Support Engineer" "twilio_taskrouter_workspaces_task_queues_v1.support_personalized_support_engineer" "friendlyName"
+	import_resource "$queues" "Personalized (Voicemail)" "twilio_taskrouter_workspaces_task_queues_v1.support_voicemail_personalized" "friendlyName"
+	import_resource "$channels" "chat" "twilio_taskrouter_workspaces_task_channels_v1.chat" "uniqueName"
 	import_resource "$channels" "voice" "twilio_taskrouter_workspaces_task_channels_v1.voice" "uniqueName"
 	echo "   - :white_check_mark: Example TaskRouter resources" >>$GITHUB_STEP_SUMMARY
 	# END FEATURE: remove-all
@@ -58,21 +67,20 @@ importInternalState() {
 	# END FEATURE: conversation-transfer
 
 	# FEATURE: callback-and-voicemail
-	import_resource "$workflows" "Template Example Callback" "module.callback-and-voicemail.twilio_taskrouter_workspaces_workflows_v1.template_example_callback" "friendlyName"
-	import_resource "$flows" "Template Example Callback Flow" "module.callback-and-voicemail.twilio_studio_flows_v2.template_example_callback_flow" "friendlyName" false
+	import_resource "$workflows" "Callback" "module.callback-and-voicemail.twilio_taskrouter_workspaces_workflows_v1.callback" "friendlyName"
+	import_resource "$flows" "Callback Flow" "module.callback-and-voicemail.twilio_studio_flows_v2.callback_flow" "friendlyName" false
 	echo "   - :white_check_mark: callback-and-voicemail resources" >>$GITHUB_STEP_SUMMARY
 	# END FEATURE: callback-and-voicemail
 
 	# FEATURE: internal-call
-	import_resource "$workflows" "Template Example Internal Calls" "module.internal-call.twilio_taskrouter_workspaces_workflows_v1.template_example_internal_calls" "friendlyName"
-	import_resource "$queues" "Template Example Internal Calls" "module.internal-call.twilio_taskrouter_workspaces_task_queues_v1.template_example_internal_calls" "friendlyName"
+	import_resource "$workflows" "Internal Calls" "module.internal-call.twilio_taskrouter_workspaces_workflows_v1.internal_calls" "friendlyName"
+	import_resource "$queues" "Internal Calls" "module.internal-call.twilio_taskrouter_workspaces_task_queues_v1.internal_calls" "friendlyName"
 	echo "   - :white_check_mark: internal-call resources" >>$GITHUB_STEP_SUMMARY
 	# END FEATURE: internal-call
 
 	# FEATURE: park-interaction
-	import_resource "$workflows" "Template Example Park/Resume" "module.park-interaction.twilio_taskrouter_workspaces_workflows_v1.template_example_park_resume" "friendlyName"
-	import_resource "$flows" "Template Example Messaging with Parking Flow" "module.park-interaction.twilio_studio_flows_v2.template_example_messaging_with_parking_flow" "friendlyName" false
-	import_resource "$channels" "chat" "module.park-interaction.twilio_taskrouter_workspaces_task_channels_v1.chat" "uniqueName"
+	import_resource "$workflows" "Park/Resume" "module.park-interaction.twilio_taskrouter_workspaces_workflows_v1.park_resume" "friendlyName"
+	import_resource "$flows" "Messaging with Parking Flow" "module.park-interaction.twilio_studio_flows_v2.messaging_with_parking_flow" "friendlyName" false
 	echo "   - :white_check_mark: park-interaction resources" >>$GITHUB_STEP_SUMMARY
 	# END FEATURE: park-interaction
 
@@ -86,7 +94,7 @@ importInternalState() {
 	# END FEATURE: activity-reservation-handler
 
 	# FEATURE: schedule-manager
-	import_resource "$flows" "Template Example Schedule Flow" "module.schedule-manager.twilio_studio_flows_v2.template_example_schedule_flow" "friendlyName" false
+	import_resource "$flows" "Schedule Flow" "module.schedule-manager.twilio_studio_flows_v2.schedule_flow" "friendlyName" false
 	echo "   - :white_check_mark: schedule-manager resources" >>$GITHUB_STEP_SUMMARY
 	# END FEATURE: schedule-manager
 }
@@ -109,7 +117,7 @@ while [ $count -lt $retries ]; do
 	terraform -chdir="../terraform/environments/default" apply -input=false -auto-approve -var-file="${ENVIRONMENT:-local}.tfvars" || true
 	exit_status=$?
 
-	if [ exit_status -eq 0 ]; then
+	if [ $exit_status -eq 0 ]; then
 		echo " - Applying terraform configuration complete" >>$GITHUB_STEP_SUMMARY
 		echo "JOB_FAILED=false" >>"$GITHUB_OUTPUT"
 		exit 0

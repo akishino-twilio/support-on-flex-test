@@ -11,13 +11,13 @@ resource "twilio_taskrouter_workspaces_workflows_v1" "live_chat_transfer" {
   workspace_sid = var.workspace_sid
   friendly_name = "Live Chat Transfer"
   configuration = templatefile("${path.module}/workflows/live_chat_transfer.json", {
-    "QUEUE_SID_SUPPORT_CHAT_LIVE_CHAT" = var.support_chat_live_chat_queue_sid
-    "QUEUE_SID_SUPPORT_CHAT_ACCOUNTS_BILLING" = var.support_chat_accounts_billing_queue_sid
-    "QUEUE_SID_SUPPORT_CHAT_BILLING" = var.support_chat_billing_queue_sid
-    "QUEUE_SID_SUPPORT_CHAT_EMAIL" = var.support_chat_email_queue_sid
-    "QUEUE_SID_SUPPORT_CHAT_MESSAGING" = var.support_chat_messaging_queue_sid
-    "QUEUE_SID_SUPPORT_CHAT_MESSAGING_INSIGHTS" = var.support_chat_messaging_insights_queue_sid
-    "QUEUE_SID_SUPPORT_CHAT_PHONE_NUMBERS" = var.support_chat_phone_numbers_queue_sid
-    "QUEUE_SID_SUPPORT_CHAT_VOICE" = var.support_chat_voice_queue_sid
+    "QUEUE_SID_SUPPORT_EVERYONE" = var.support_everyone_queue_sid
+    "QUEUE_SID_SUPPORT_ACCOUNT_ADMINISTRATION" = var.support_accounts_billing_queue_sid
+    "QUEUE_SID_SUPPORT_BILLING" = var.support_billing_queue_sid
+    "QUEUE_SID_SUPPORT_EMAIL" = var.support_email_queue_sid
+    "QUEUE_SID_SUPPORT_MESSAGING" = var.support_messaging_queue_sid
+    "QUEUE_SID_SUPPORT_MESSAGING_INSIGHTS" = var.support_messaging_insights_queue_sid
+    "QUEUE_SID_SUPPORT_PHONE_NUMBERS" = var.support_phone_numbers_queue_sid
+    "QUEUE_SID_SUPPORT_VOICE" = var.support_voice_queue_sid
   })
 }
