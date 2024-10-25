@@ -1,56 +1,56 @@
 [
   {
     "minimum": 0,
-    "multivalue": false,
-    "name": "accounts_billing",
+    "multivalue": true,
+    "name": "support_accounts_billing",
     "maximum": 5
   },
   {
     "minimum": 0,
-    "multivalue": false,
-    "name": "billing",
+    "multivalue": true,
+    "name": "support_billing",
     "maximum": 5
   },
   {
     "minimum": 0,
-    "multivalue": false,
-    "name": "email",
+    "multivalue": true,
+    "name": "support_email",
     "maximum": 5
   },
   {
     "minimum": 0,
-    "multivalue": false,
-    "name": "messaging",
+    "multivalue": true,
+    "name": "support_messaging",
     "maximum": 5
   },
   {
     "minimum": 0,
-    "multivalue": false,
-    "name": "messaging_insights",
+    "multivalue": true,
+    "name": "support_messaging_insights",
     "maximum": 5
   },
   {
     "minimum": 0,
-    "multivalue": false,
-    "name": "phone_numbers",
+    "multivalue": true,
+    "name": "support_phone_numbers",
     "maximum": 5
   },
   {
     "minimum": 0,
-    "multivalue": false,
-    "name": "voice",
+    "multivalue": true,
+    "name": "support_voice",
     "maximum": 5
   },
   {
     "minimum": null,
-    "multivalue": false,
-    "name": "personalized_support_engineer",
+    "multivalue": true,
+    "name": "support_personalized_support_engineer",
     "maximum": null
   },
   {
     "minimum": null,
     "multivalue": false,
-    "name": "personalized_tam",
+    "name": "support_personalized_tam",
     "maximum": null
   }
 ]
