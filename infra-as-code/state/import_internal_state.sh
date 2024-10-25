@@ -107,9 +107,10 @@ if ! [ -f ../terraform/environments/default/terraform.tfstate ]; then
 	importInternalState
 fi
 
-retries=3
+retries=1
 count=0
 delay=5
+log_file="terraform_apply.log"
 
 # Disable immediate exit on error
 set +e
