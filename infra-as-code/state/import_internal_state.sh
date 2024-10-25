@@ -111,6 +111,9 @@ retries=3
 count=0
 delay=5
 
+# Disable immediate exit on error
+set +e
+
 ### terraform apply may fail due to rate limits when creating new resources. Retrying if it fails
 while [ $count -lt $retries ]; do
 	terraform -chdir="../terraform/environments/default" apply -input=false -auto-approve -var-file="${ENVIRONMENT:-local}.tfvars" -parallelism=1
@@ -129,4 +132,8 @@ done
 
 echo " - Applying terraform configuration failed after $retries attempts" >>$GITHUB_STEP_SUMMARY
 echo "JOB_FAILED=true" >>"$GITHUB_OUTPUT"
+
+# Re-enable immediate exit on error
+set -e
+
 exit 0
