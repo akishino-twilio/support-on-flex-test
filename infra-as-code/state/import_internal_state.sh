@@ -133,7 +133,4 @@ done
 echo " - Applying terraform configuration failed after $retries attempts" >>$GITHUB_STEP_SUMMARY
 echo "JOB_FAILED=true" >>"$GITHUB_OUTPUT"
 
-# Re-enable immediate exit on error
-set -e
-
 exit 0

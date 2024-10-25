@@ -38,20 +38,20 @@
         ]
       },
       {
-        "filter_friendly_name": "Phone Numbers",
-        "expression": "productCategory == 'support_phone_numbers'",
-        "targets": [
-          {
-            "queue": "${QUEUE_SID_SUPPORT_PHONE_NUMBERS}"
-          }
-        ]
-      },
-      {
         "filter_friendly_name": "Messaging Insights",
         "expression": "productCategory == 'support_messaging_insights'",
         "targets": [
           {
             "queue": "${QUEUE_SID_SUPPORT_MESSAGING_INSIGHTS}"
+          }
+        ]
+      },
+      {
+        "filter_friendly_name": "Phone Numbers",
+        "expression": "productCategory == 'support_phone_numbers'",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_SUPPORT_PHONE_NUMBERS}"
           }
         ]
       },
