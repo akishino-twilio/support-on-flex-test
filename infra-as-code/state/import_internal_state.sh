@@ -113,7 +113,7 @@ delay=5
 
 ### terraform apply may fail due to rate limits when creating new resources. Retrying if it fails
 while [ $count -lt $retries ]; do
-	terraform -chdir="../terraform/environments/default" apply -input=false -auto-approve -var-file="${ENVIRONMENT:-local}.tfvars" || true
+	terraform -chdir="../terraform/environments/default" apply -input=false -auto-approve -var-file="${ENVIRONMENT:-local}.tfvars" -parallelism=1
 	exit_status=$?
 
 	if [ $exit_status -eq 0 ]; then
