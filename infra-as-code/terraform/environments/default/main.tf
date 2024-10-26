@@ -120,7 +120,10 @@ resource "twilio_taskrouter_workspaces_task_channels_v1" "chat" {
 module "personalized-ivr" {
   source = "../../modules/personalized-ivr"
 
+  workspace_sid = var.TWILIO_FLEX_WORKSPACE_SID
   support_authorizer_domain = var.SUPPORT_AUTHORIZER_DOMAIN
+  support_personalized_tam_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_personalized_tam.sid
+  support_personalized_support_engineer_queue_sid = twilio_taskrouter_workspaces_task_queues_v1.support_personalized_support_engineer.sid
 }
 # END FEATURE: personalized-ivr
 

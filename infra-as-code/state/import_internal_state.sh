@@ -62,6 +62,7 @@ importInternalState() {
 	# END FEATURE: remove-all
 
 	# FEATURE: personalized-ivr
+	import_resource "$workflows" "support_voice_personalized" "module.personalized-ivr.twilio_taskrouter_workspaces_workflows_v1.support_voice_personalized" "friendlyName"
 	import_resource "$flows" "support-personalized" "module.personalized-ivr.twilio_studio_flows_v2.personalized_ivr_flow" "friendlyName" false
 	echo "   - :white_check_mark: personalized-ivr resources" >>$GITHUB_STEP_SUMMARY
 	# END FEATURE: personalized-ivr
