@@ -1,0 +1,33 @@
+{
+  "task_routing": {
+    "filters": [
+      {
+        "filter_friendly_name": "Personalized TAM",
+        "expression": "productCategory == 'support_personalized_tam'",
+        "targets": [
+          {
+            "queue": "${QUEUE_SID_PERSONALIZED_TAM}",
+            "expression": "task.first == worker.email AND worker.sid NOT IN task.rejectedWorkerSids",
+            "skip_if": "1 == 1"
+          },
+          {
+            "queue": "${QUEUE_SID_PERSONALIZED_TAM}",
+            "expression": "task.second == worker.email AND worker.sid NOT IN task.rejectedWorkerSids",
+            "skip_if": "1 == 1"
+          },
+          {
+            "queue": "${QUEUE_SID_PERSONALIZED_TAM}",
+            "expression": "task.third == worker.email AND worker.sid NOT IN task.rejectedWorkerSids",
+            "skip_if": "1 == 1"
+          },
+          {
+            "queue": "${QUEUE_SID_PERSONALIZED_SUPPORT_ENGINEER}"
+          }
+        ]
+      }
+    ],
+    "default_filter": {
+      "queue": "${QUEUE_SID_PERSONALIZED_SUPPORT_ENGINEER}"
+    }
+  }
+}
