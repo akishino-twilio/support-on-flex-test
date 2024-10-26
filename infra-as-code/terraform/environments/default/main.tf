@@ -116,6 +116,14 @@ resource "twilio_taskrouter_workspaces_task_channels_v1" "chat" {
   unique_name = "chat"
 }
 
+# FEATURE: personalized-ivr
+module "personalized-ivr" {
+  source = "../../modules/personalized-ivr"
+
+  support_authorizer_domain = var.SUPPORT_AUTHORIZER_DOMAIN
+}
+# END FEATURE: personalized-ivr
+
 # FEATURE: activity-reservation-handler
 module "activity-reservation-handler" {
   source = "../../modules/activity-reservation-handler"
