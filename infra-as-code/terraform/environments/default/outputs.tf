@@ -7,6 +7,14 @@ output "support_live_chat_workflow_sid" {
 }
 # END FEATURE: remove-all
 
+# FEATURE: personalized-ivr
+output "personalized_ivr_flow_sid" {
+  value = module.personalized-ivr.personalized_ivr_flow_sid
+  description = "Personalized IVR flow SID"
+}
+# END FEATURE: personalized-ivr
+
+
 # FEATURE: callback-and-voicemail
 output "callback_workflow_sid" {
   value = module.callback-and-voicemail.callback_workflow_sid

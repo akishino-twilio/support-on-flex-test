@@ -60,6 +60,19 @@ variable "TWILIO_FLEX_WORKSPACE_SID" {
   }
 }
 
+# FEATURE: personalized-ivr
+
+variable "SUPPORT_AUTHORIZER_DOMAIN" {
+  type        = string
+  description = "support authorizer domain for studio proxy"
+  validation {
+    condition     = length(var.SUPPORT_AUTHORIZER_DOMAIN) > 36 && substr(var.SUPPORT_AUTHORIZER_DOMAIN, 10, 46) == ".execute-api.us-east-1.amazonaws.com"
+    error_message = "SUPPORT_AUTHORIZER_DOMAIN expected to end with with \".execute-api.us-east-1.amazonaws.com\"."
+  }
+}
+
+# END FEATURE: personalized-ivr
+
 # FEATURE: schedule-manager
 
 variable "SCHEDULE_MANAGER_DOMAIN" {
@@ -100,7 +113,7 @@ variable "SCHEDULE_MANAGER_CHECK_FUNCTION_SID" {
 
 # END FEATURE: schedule-manager
 
-# FEATURE: callback-and-voicemail	
+# FEATURE: callback-and-voicemail
 variable "SERVERLESS_CALLBACK_FUNCTION_SID" {
   type        = string
   description = "create callback function sid"
@@ -109,7 +122,4 @@ variable "SERVERLESS_CALLBACK_FUNCTION_SID" {
     error_message = "SERVERLESS_CALLBACK_FUNCTION_SID expected to start with \"ZH\"."
   }
 }
-# END FEATURE: callback-and-voicemail	
-
-
-
+# END FEATURE: callback-and-voicemail

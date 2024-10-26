@@ -56,9 +56,15 @@ importInternalState() {
 	import_resource "$queues" "Personalized TAM" "twilio_taskrouter_workspaces_task_queues_v1.support_personalized_tam" "friendlyName"
 	import_resource "$queues" "Personalized Support Engineer" "twilio_taskrouter_workspaces_task_queues_v1.support_personalized_support_engineer" "friendlyName"
 	import_resource "$queues" "Personalized (Voicemail)" "twilio_taskrouter_workspaces_task_queues_v1.support_voicemail_personalized" "friendlyName"
+	import_resource "$channels" "chat" "twilio_taskrouter_workspaces_task_channels_v1.chat" "uniqueName"
 	import_resource "$channels" "voice" "twilio_taskrouter_workspaces_task_channels_v1.voice" "uniqueName"
 	echo "   - :white_check_mark: Example TaskRouter resources" >>$GITHUB_STEP_SUMMARY
 	# END FEATURE: remove-all
+
+	# FEATURE: personalized-ivr
+	import_resource "$flows" "support-personalized" "module.personalized-ivr.twilio_studio_flows_v2.personalized_ivr_flow" "friendlyName" false
+	echo "   - :white_check_mark: personalized-ivr resources" >>$GITHUB_STEP_SUMMARY
+	# END FEATURE: personalized-ivr
 
 	# FEATURE: conversation-transfer
 	import_resource "$workflows" "Live Chat Transfer" "module.conversation-transfer.twilio_taskrouter_workspaces_workflows_v1.live_chat_transfer" "friendlyName"

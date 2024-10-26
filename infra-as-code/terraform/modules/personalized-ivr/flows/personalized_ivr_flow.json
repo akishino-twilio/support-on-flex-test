@@ -1,0 +1,1059 @@
+{
+  "states": [
+    {
+      "transitions": [
+        {
+          "event": "incomingMessage"
+        },
+        {
+          "event": "incomingCall",
+          "next": "Welcome"
+        },
+        {
+          "event": "incomingConversationMessage"
+        },
+        {
+          "event": "incomingRequest"
+        },
+        {
+          "event": "incomingParent"
+        }
+      ],
+      "type": "trigger",
+      "name": "Trigger",
+      "properties": {
+        "offset": {
+          "y": -1550,
+          "x": -80
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "audioComplete",
+          "next": "TemporaryBannerStart"
+        }
+      ],
+      "type": "say-play",
+      "name": "Welcome",
+      "properties": {
+        "say": "You have reached Twilio's Personalized Support hotline.",
+        "voice": "Polly.Joanna-Neural",
+        "language": "en-US",
+        "loop": 1,
+        "offset": {
+          "y": -1340,
+          "x": 80
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "audioComplete",
+          "next": "StartRecording"
+        }
+      ],
+      "type": "say-play",
+      "name": "CallBeingRecorded",
+      "properties": {
+        "say": "This call will be recorded for quality assurance and to provide you with the best possible support. If you do not consent, please hang up now and reach out to us through e-mail.",
+        "voice": "Polly.Joanna-Neural",
+        "language": "en-US",
+        "loop": 1,
+        "offset": {
+          "y": -800,
+          "x": 180
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "keypress",
+          "next": "SetPinVariables"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "event": "timeout",
+          "next": "SendCallToPSEQueue"
+        }
+      ],
+      "type": "gather-input-on-call",
+      "name": "GatherPinInput",
+      "properties": {
+        "stop_gather": true,
+        "language": "en-US",
+        "gather_language": "en",
+        "say": "Please enter your PIN to be connected with your Technical Account Manager. Alternatively, please hold and we'll connect you to the next available Personalized Support Engineer",
+        "number_of_digits": 4,
+        "loop": 1,
+        "timeout": 10,
+        "offset": {
+          "y": 900,
+          "x": 540
+        },
+        "voice": "Polly.Joanna-Neural",
+        "speech_timeout": "auto",
+        "finish_on_key": "#",
+        "profanity_filter": "true"
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "success",
+          "next": "HandlePinValidation"
+        },
+        {
+          "event": "failed",
+          "next": "UnableValidatePin"
+        }
+      ],
+      "type": "make-http-request",
+      "name": "PinValidation",
+      "properties": {
+        "body": "{\"pin\":\"{{flow.variables.pin}}\"}",
+        "url": "https://${SUPPORT_AUTHORIZER_DOMAIN}/support-authorizer/v1/voice/verifyPin",
+        "method": "POST",
+        "content_type": "application/json;charset=utf-8",
+        "offset": {
+          "y": 950,
+          "x": -40
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "audioComplete",
+          "next": "RegatherPinInput"
+        }
+      ],
+      "type": "say-play",
+      "name": "PinFailure",
+      "properties": {
+        "say": "Sorry, {{flow.variables.pin | split: '' | join: ', ' }}  does not seem to be a valid Pin.",
+        "voice": "Polly.Joanna-Neural",
+        "language": "en-US",
+        "loop": 1,
+        "offset": {
+          "y": 1700,
+          "x": 180
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "keypress",
+          "next": "SetFailurePinVariables"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "event": "timeout",
+          "next": "RegatherPinInput"
+        }
+      ],
+      "type": "gather-input-on-call",
+      "name": "RegatherPinInput",
+      "properties": {
+        "stop_gather": true,
+        "language": "en-US",
+        "gather_language": "en",
+        "say": "Please re-enter your 4-digit customer Pin.",
+        "number_of_digits": 4,
+        "loop": 1,
+        "timeout": 10,
+        "offset": {
+          "y": 1940,
+          "x": 230
+        },
+        "voice": "Polly.Joanna-Neural",
+        "speech_timeout": "auto",
+        "finish_on_key": "#",
+        "profanity_filter": "true"
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "audioComplete",
+          "next": "VoicemailPrompt"
+        }
+      ],
+      "type": "say-play",
+      "name": "PinSuccess",
+      "properties": {
+        "say": "Your Pin has been successfully verified! Please wait while we connect you to your personalized support specialist.",
+        "voice": "Polly.Joanna-Neural",
+        "language": "en-US",
+        "loop": 1,
+        "offset": {
+          "y": 1700,
+          "x": -290
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "keypress",
+          "next": "VoicemailInstructions"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "event": "timeout",
+          "next": "GetAgents"
+        }
+      ],
+      "type": "gather-input-on-call",
+      "name": "VoicemailPrompt",
+      "properties": {
+        "stop_gather": false,
+        "language": "en-US",
+        "gather_language": "en",
+        "say": "If you'd like to leave a voicemail instead, please press 1. Otherwise, you may stay on the line.",
+        "number_of_digits": 1,
+        "loop": 1,
+        "timeout": 5,
+        "offset": {
+          "y": 1990,
+          "x": -400
+        },
+        "voice": "Polly.Joanna-Neural",
+        "speech_timeout": "auto",
+        "finish_on_key": "1",
+        "profanity_filter": "true"
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "audioComplete",
+          "next": "RecordVoicemail"
+        }
+      ],
+      "type": "say-play",
+      "name": "VoicemailInstructions",
+      "properties": {
+        "say": "Please leave your message at the sound of the tone. When you are finished, you may hang up.",
+        "voice": "Polly.Joanna-Neural",
+        "language": "en-US",
+        "loop": 1,
+        "offset": {
+          "y": 2210,
+          "x": -510
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "recordingComplete",
+          "next": "SetVoicemailVariables"
+        },
+        {
+          "event": "noAudio",
+          "next": "SetEmptyVoicemailVariables"
+        },
+        {
+          "event": "hangup",
+          "next": "SetHungUpVoicemailVariables"
+        }
+      ],
+      "type": "record-voicemail",
+      "name": "RecordVoicemail",
+      "properties": {
+        "trim": "do-not-trim",
+        "transcribe": false,
+        "play_beep": "true",
+        "max_length": 120,
+        "timeout": 5,
+        "offset": {
+          "y": 2440,
+          "x": -530
+        },
+        "recording_status_callback_url": "https://${SUPPORT_AUTHORIZER_DOMAIN}/support-authorizer/v1/voice/voicemail/{{flow.variables.accountSid}}",
+        "finish_on_key": "#"
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "noMatch",
+          "next": "UnableValidatePin"
+        },
+        {
+          "conditions": [
+            {
+              "type": "equal_to",
+              "friendly_name": "if valid PIN",
+              "arguments": ["{{widgets.PinValidation.parsed.data.verified}}"],
+              "value": "true"
+            }
+          ],
+          "event": "match",
+          "next": "SetAccountVariables"
+        },
+        {
+          "conditions": [
+            {
+              "type": "equal_to",
+              "friendly_name": "if invalid PIN",
+              "arguments": ["{{widgets.PinValidation.parsed.data.verified}}"],
+              "value": "false"
+            }
+          ],
+          "event": "match",
+          "next": "HandlePinFailureCount"
+        }
+      ],
+      "type": "split-based-on",
+      "name": "HandlePinValidation",
+      "properties": {
+        "input": "{{widgets.PinValidation.parsed.data.verified}}",
+        "offset": {
+          "y": 1200,
+          "x": -220
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "audioComplete"
+        }
+      ],
+      "type": "say-play",
+      "name": "ServiceDown",
+      "properties": {
+        "say": "We're sorry, it appears that we are unable to take Personalized voice calls at the moment. Please call back later, or open a ticket through the support center website. Thank you for your understanding!",
+        "voice": "Polly.Joanna-Neural",
+        "language": "en-US",
+        "loop": 1,
+        "offset": {
+          "y": 180,
+          "x": 660
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "noMatch",
+          "next": "UnableGetAgents"
+        },
+        {
+          "conditions": [
+            {
+              "type": "equal_to",
+              "friendly_name": "Agents successfully set",
+              "arguments": ["{{widgets.GetAgents.status_code}}"],
+              "value": "200"
+            }
+          ],
+          "event": "match",
+          "next": "SetAgentsVariables"
+        },
+        {
+          "conditions": [
+            {
+              "type": "not_equal_to",
+              "friendly_name": "Agents not set",
+              "arguments": ["{{widgets.GetAgents.status_code}}"],
+              "value": "200"
+            }
+          ],
+          "event": "match",
+          "next": "UnableGetAgents"
+        }
+      ],
+      "type": "split-based-on",
+      "name": "HandleGetAgents",
+      "properties": {
+        "input": "{{widgets.GetAgents.status_code}}",
+        "offset": {
+          "y": 2450,
+          "x": 570
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "audioComplete",
+          "next": "VoicemailInstructions"
+        }
+      ],
+      "type": "say-play",
+      "name": "UnableGetAgents",
+      "properties": {
+        "say": "We're sorry, but we are not able to connect you to your personalized support specialists at this time. We apologize for the inconvenience. Please stay on the line to leave a voicemail. Alternatively, if you would like to call back later or enter a ticket through the Support Center, you may hang up now.",
+        "voice": "Polly.Joanna-Neural",
+        "language": "en-US",
+        "loop": 1,
+        "offset": {
+          "y": 2700,
+          "x": 440
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "next",
+          "next": "PinValidation"
+        }
+      ],
+      "type": "set-variables",
+      "name": "SetFailurePinVariables",
+      "properties": {
+        "variables": [
+          {
+            "key": "failureCount",
+            "value": "{{flow.variables.failureCount | plus:1}}"
+          },
+          {
+            "key": "pin",
+            "value": "{{widgets.RegatherPinInput.Digits}}"
+          }
+        ],
+        "offset": {
+          "y": 2200,
+          "x": 320
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "noMatch",
+          "next": "UnableValidatePin"
+        },
+        {
+          "conditions": [
+            {
+              "type": "less_than",
+              "friendly_name": "1st & 2nd failures",
+              "arguments": ["{{flow.variables.failureCount}}"],
+              "value": "2"
+            }
+          ],
+          "event": "match",
+          "next": "PinFailure"
+        }
+      ],
+      "type": "split-based-on",
+      "name": "HandlePinFailureCount",
+      "properties": {
+        "input": "{{flow.variables.failureCount}}",
+        "offset": {
+          "y": 1470,
+          "x": 10
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "audioComplete",
+          "next": "SetFailureVerificationVariables"
+        }
+      ],
+      "type": "say-play",
+      "name": "UnableValidatePin",
+      "properties": {
+        "say": "We cannot seem to validate your customer pin at this time. Please wait while we connect you to a personalized support engineer. You may be asked additional verification questions by the agent.",
+        "voice": "Polly.Joanna-Neural",
+        "language": "en-US",
+        "loop": 1,
+        "offset": {
+          "y": 1200,
+          "x": 180
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "success",
+          "next": "SetTicketVariables"
+        },
+        {
+          "event": "failed",
+          "next": "ServiceDown"
+        }
+      ],
+      "type": "make-http-request",
+      "name": "TicketCreate",
+      "properties": {
+        "body": "{{flow.variables | to_json}}",
+        "url": "https://${SUPPORT_AUTHORIZER_DOMAIN}/support-authorizer/v1/voice/ticket",
+        "method": "POST",
+        "content_type": "application/json;charset=utf-8",
+        "offset": {
+          "y": -50,
+          "x": 280
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "next",
+          "next": "UpdateTicket"
+        }
+      ],
+      "type": "set-variables",
+      "name": "SetVoicemailVariables",
+      "properties": {
+        "variables": [
+          {
+            "key": "voicemailSid",
+            "value": "{{widgets.RecordVoicemail.RecordingSid}}"
+          },
+          {
+            "key": "assignee",
+            "value": "{{flow.variables.agents.first}}"
+          },
+          {
+            "key": "voicemailUrl",
+            "value": "{{widgets.RecordVoicemail.RecordingUrl}}"
+          }
+        ],
+        "offset": {
+          "y": 3340,
+          "x": -630
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "next",
+          "next": "PinValidation"
+        }
+      ],
+      "type": "set-variables",
+      "name": "SetPinVariables",
+      "properties": {
+        "variables": [
+          {
+            "key": "failureCount",
+            "value": "0"
+          },
+          {
+            "key": "pin",
+            "value": "{{widgets.GatherPinInput.Digits}}"
+          }
+        ],
+        "offset": {
+          "y": 710,
+          "x": -10
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "next",
+          "next": "IvrAdmin"
+        }
+      ],
+      "type": "set-variables",
+      "name": "SetTicketVariables",
+      "properties": {
+        "variables": [
+          {
+            "key": "ticketId",
+            "value": "{{widgets.TicketCreate.parsed.data.ticketId}}"
+          }
+        ],
+        "offset": {
+          "y": 190,
+          "x": 160
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "next",
+          "next": "TicketCreate"
+        }
+      ],
+      "type": "set-variables",
+      "name": "SetInboundVariables",
+      "properties": {
+        "variables": [
+          {
+            "key": "form",
+            "value": "Support"
+          },
+          {
+            "key": "brand",
+            "value": "Twilio"
+          },
+          {
+            "key": "requester",
+            "value": "{{trigger.call.From}}"
+          },
+          {
+            "key": "assignee",
+            "value": "zendesk-api+v2@twilio.com"
+          },
+          {
+            "key": "callSid",
+            "value": "{{trigger.call.CallSid}}"
+          },
+          {
+            "key": "dateCreated",
+            "value": "{{ \"now\" | date: \"%Y-%m-%d %H:%M %Z\" }}"
+          },
+          {
+            "key": "tags",
+            "value": "sof_voice, sof_voice_support_personalized, 4_personalized, support_level_5_pers"
+          },
+          {
+            "key": "subject",
+            "value": "Inbound call from {{trigger.call.From}} for Personalized Support"
+          },
+          {
+            "key": "channel",
+            "value": "Personalized"
+          },
+          {
+            "key": "recordingSid",
+            "value": "{{widgets.StartRecording.Sid}}"
+          },
+          {
+            "key": "executionSid",
+            "value": "{{flow.sid}}"
+          },
+          {
+            "key": "supportLevel",
+            "value": "personalized"
+          },
+          {
+            "key": "gatherPinAttempt",
+            "value": "0"
+          },
+          {
+            "key": "phoneNumberFriendlyName",
+            "value": "support-personalized"
+          }
+        ],
+        "offset": {
+          "y": -290,
+          "x": 260
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "success"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "type": "make-http-request",
+      "name": "UpdateTicket",
+      "properties": {
+        "body": "{{flow.variables | to_json}}",
+        "url": "https://${SUPPORT_AUTHORIZER_DOMAIN}/support-authorizer/v1/voice/ticket/{{flow.variables.ticketId}}",
+        "method": "POST",
+        "content_type": "application/json;charset=utf-8",
+        "offset": {
+          "y": 3560,
+          "x": -70
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "next",
+          "next": "SetVoicemailVariables"
+        }
+      ],
+      "type": "set-variables",
+      "name": "SetEmptyVoicemailVariables",
+      "properties": {
+        "variables": [
+          {
+            "key": "tags",
+            "value": "{{flow.variables.tags | append: \", sof_voice_voicemail_empty\"}}"
+          }
+        ],
+        "offset": {
+          "y": 2940,
+          "x": -390
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "next",
+          "next": "SendCallToFlex"
+        }
+      ],
+      "type": "set-variables",
+      "name": "SetAgentsVariables",
+      "properties": {
+        "variables": [
+          {
+            "key": "assignedTams",
+            "value": "{{widgets.GetAgents.parsed.data.assignedTams}}"
+          },
+          {
+            "key": "availableTams",
+            "value": "{{widgets.GetAgents.parsed.data.taskAttribute}}"
+          }
+        ],
+        "offset": {
+          "y": 2700,
+          "x": 770
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "next",
+          "next": "PinSuccess"
+        }
+      ],
+      "type": "set-variables",
+      "name": "SetAccountVariables",
+      "properties": {
+        "variables": [
+          {
+            "key": "accountSid",
+            "value": "{{widgets.PinValidation.parsed.data.account.id}}"
+          }
+        ],
+        "offset": {
+          "y": 1470,
+          "x": -310
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "success",
+          "next": "HandleGetAgents"
+        },
+        {
+          "event": "failed",
+          "next": "UnableGetAgents"
+        }
+      ],
+      "type": "make-http-request",
+      "name": "GetAgents",
+      "properties": {
+        "url": "https://${SUPPORT_AUTHORIZER_DOMAIN}/support-authorizer/v1/voice/taskAttributes/tams/{{flow.variables.accountSid}}?status=onNow",
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "offset": {
+          "y": 2290,
+          "x": -190
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "audioComplete",
+          "next": "VoicemailInstructions"
+        }
+      ],
+      "type": "say-play",
+      "name": "UnableCreateTask",
+      "properties": {
+        "say": "It seems that we are unable to connect you to a Personalized Support Specialist at this time. We apologize for the inconvenience, and ask that you leave a voicemail instead. If you would like to call back later or enter a ticket through the Support Center, you may hang up now.",
+        "voice": "Polly.Joanna-Neural",
+        "language": "en-US",
+        "loop": 1,
+        "offset": {
+          "y": 3780,
+          "x": 980
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "next",
+          "next": "UnableCreateTask"
+        }
+      ],
+      "type": "set-variables",
+      "name": "SetFailedTaskVariables",
+      "properties": {
+        "variables": [
+          {
+            "key": "tags",
+            "value": "{{flow.variables.tags | append: \", sof_voice_task_failed\"}}"
+          }
+        ],
+        "offset": {
+          "y": 3560,
+          "x": 750
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "success",
+          "next": "SetInboundVariables"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "type": "record-call",
+      "name": "StartRecording",
+      "properties": {
+        "recording_status_callback_events": "",
+        "recording_channels": "dual",
+        "record_call": true,
+        "recording_status_callback": "https://${SUPPORT_AUTHORIZER_DOMAIN}/support-authorizer/v1/voice/recording",
+        "offset": {
+          "y": -540,
+          "x": 230
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "next",
+          "next": "SendCallToPSEQueue"
+        }
+      ],
+      "type": "set-variables",
+      "name": "SetFailureVerificationVariables",
+      "properties": {
+        "variables": [
+          {
+            "key": "tags",
+            "value": "{{flow.variables.tags | append: \", sof_voice_pin_failed\"}}"
+          }
+        ],
+        "offset": {
+          "y": 1470,
+          "x": 670
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "next",
+          "next": "SetVoicemailVariables"
+        }
+      ],
+      "type": "set-variables",
+      "name": "SetHungUpVoicemailVariables",
+      "properties": {
+        "variables": [
+          {
+            "key": "tags",
+            "value": "{{flow.variables.tags | append: \", sof_voice_voicemail_done\"}}"
+          }
+        ],
+        "offset": {
+          "y": 2940,
+          "x": -50
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "audioComplete",
+          "next": "CallBeingRecorded"
+        }
+      ],
+      "type": "say-play",
+      "name": "TemporaryBannerStart",
+      "properties": {
+        "say": "''",
+        "voice": "Polly.Joanna-Neural",
+        "language": "en-US",
+        "loop": 1,
+        "offset": {
+          "y": -1070,
+          "x": 130
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "return",
+          "next": "VerifyFlexTask"
+        },
+        {
+          "event": "timeout",
+          "next": "VerifyFlexTask"
+        },
+        {
+          "event": "fail",
+          "next": "SetFailedTaskVariables"
+        }
+      ],
+      "type": "add-twiml-redirect",
+      "name": "SendCallToFlex",
+      "properties": {
+        "url": "https://${SUPPORT_AUTHORIZER_DOMAIN}/support-authorizer/v1/voice/sendCallToFlex?workflowName=support_voice_personalized&studioFlowName=support-personalized&name={{trigger.call.From}}&inboundNumber={{trigger.call.From}}&productCategory=support_personalized_tam&ticketId={{flow.variables.ticketId}}&first={{widgets.GetAgents.parsed.data.taskAttribute.first}}&second={{widgets.GetAgents.parsed.data.taskAttribute.second}}&third={{widgets.GetAgents.parsed.data.taskAttribute.third}}&accountSid={{flow.variables.accountSid}}&ccAgents={{widgets.GetAgents.parsed.data.assignedTamsEmails.first}}&ccAgents={{widgets.GetAgents.parsed.data.assignedTamsEmails.second}}&ccAgents={{widgets.GetAgents.parsed.data.assignedTamsEmails.third}}&phoneNumberFriendlyName={{flow.variables.phoneNumberFriendlyName}}",
+        "method": "POST",
+        "timeout": "10",
+        "offset": {
+          "y": 2960,
+          "x": 790
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "return",
+          "next": "VerifyFlexTask"
+        },
+        {
+          "event": "timeout",
+          "next": "VerifyFlexTask"
+        },
+        {
+          "event": "fail",
+          "next": "SetFailedTaskVariables"
+        }
+      ],
+      "type": "add-twiml-redirect",
+      "name": "SendCallToPSEQueue",
+      "properties": {
+        "url": "https://${SUPPORT_AUTHORIZER_DOMAIN}/support-authorizer/v1/voice/sendCallToFlex?workflowName=support_voice_personalized&studioFlowName=support-personalized&name={{trigger.call.From}}&inboundNumber={{trigger.call.From}}&productCategory=support_personalized_tam&ticketId={{flow.variables.ticketId}}&pin={{flow.variables.pin}}&phoneNumberFriendlyName={{flow.variables.phoneNumberFriendlyName}}",
+        "method": "POST",
+        "timeout": "10",
+        "offset": {
+          "y": 2960,
+          "x": 1110
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "success",
+          "next": "UpdateTicket"
+        },
+        {
+          "event": "failed",
+          "next": "SetFailedTaskVariables"
+        }
+      ],
+      "type": "make-http-request",
+      "name": "VerifyFlexTask",
+      "properties": {
+        "url": "https://${SUPPORT_AUTHORIZER_DOMAIN}/support-authorizer/v1/voice/verifyFlexTask?ticketId={{flow.variables.ticketId}}",
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "offset": {
+          "y": 3340,
+          "x": 440
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "success",
+          "next": "OptionalMessage"
+        },
+        {
+          "event": "failed",
+          "next": "UnableGetAgents"
+        }
+      ],
+      "type": "make-http-request",
+      "name": "IvrAdmin",
+      "properties": {
+        "url": "https://${SUPPORT_AUTHORIZER_DOMAIN}/support-authorizer/v1/voice/ivrAdmin",
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "offset": {
+          "y": 420,
+          "x": 350
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "noMatch",
+          "next": "VoicemailInstructions"
+        },
+        {
+          "conditions": [
+            {
+              "type": "equal_to",
+              "friendly_name": "If IVR Enabled",
+              "arguments": ["{{widgets.IvrAdmin.parsed.enabled}}"],
+              "value": "true"
+            }
+          ],
+          "event": "match",
+          "next": "GatherPinInput"
+        }
+      ],
+      "type": "split-based-on",
+      "name": "HandleIvrAdmin",
+      "properties": {
+        "input": "{{widgets.IvrAdmin.parsed.enabled}}",
+        "offset": {
+          "y": 660,
+          "x": 1120
+        }
+      }
+    },
+    {
+      "transitions": [
+        {
+          "event": "audioComplete",
+          "next": "HandleIvrAdmin"
+        }
+      ],
+      "type": "say-play",
+      "name": "OptionalMessage",
+      "properties": {
+        "say": "{{widgets.IvrAdmin.parsed.message}}",
+        "voice": "Polly.Joanna",
+        "language": "en-US",
+        "loop": 1,
+        "offset": {
+          "y": 640,
+          "x": 560
+        }
+      }
+    }
+  ],
+  "initial_state": "Trigger",
+  "flags": {
+    "allow_concurrent_calls": true
+  },
+  "description": "support-personalized"
+}
