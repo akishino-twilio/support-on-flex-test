@@ -61,8 +61,8 @@ This feature can be enabled via the `flex-config` attributes. Just set the `metr
 
 * To enable specific data tiles on the Real-time Queues View set the appropriate tile to `true`
 * You can change the Channel colors as needed.
-* The Enhanced Agent Activity tile replaces the native Bar Chart so if you enable it you can disable the Bar Chart by setting `"agents_by_activity_bar_chart": false`
-* The native All Channels tile may be redundant with the other tiles enabled, so you may disable this if you'd like by setting `"all_channels_data_tile": false`
+* The Enhanced Agent Activity tile replaces the native Bar Chart so if you enable it you can disable the Bar Chart on Flex UI 2.8 or later by setting `"agents_by_activity_bar_chart": false`.
+* The native All Channels tile may be redundant with the other tiles enabled, so you may disable this on Flex UI 2.8 or later by setting `"all_channels_data_tile": false`.
 * Configure activities to match the names of the Activities as defined in TaskRouter. The Flex UI includes a [set of icons](https://www.twilio.com/docs/flex/developer/ui/v1/icons#default-icons)
  that are used to enhance the display of the individual activities.
 
@@ -84,7 +84,8 @@ Note: The Teams View can only display up to 200 agents, so the worker data avail
           "task_summary_tile": false,
           "team_activity_tile": false,
           "status_idle_color": "limegreen",
-          "status_busy_color": "royalblue"
+          "status_busy_color": "royalblue",
+          "status_idle_name": "Available"
         },
         "channels": {
           "Voice": {
