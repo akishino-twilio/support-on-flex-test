@@ -15,6 +15,7 @@ export enum StringTemplates {
   External = 'PSDirectoryExternal',
   SearchDirectory = 'PSDirectorySearchDirectory',
   NoItemsFound = 'PSDirectoryNoItemsFound',
+  MoreItems = 'PSDirectoryMoreItems',
   NoAgentsAvailable = 'PSDirectoryNoAgentsAvailable',
   NoQueuesAvailable = 'PSDirectoryNoQueuesAvailable',
   ColdTransfer = 'PSDirectoryColdTransfer',
@@ -23,7 +24,9 @@ export enum StringTemplates {
   QueueTooltip = 'PSDirectoryQueueTooltip',
   NA = 'PSDirectoryNA',
   CountryDisabled = 'PSDirectoryCountryDisabled',
+  CountryUnknown = 'PSDirectoryCountryUnknown',
   HighRiskSpecialNumberDisabled = 'PSDirectoryHighRiskSpecialNumberDisabled',
+  UpdateList = 'PSDirectoryUpdateList',
 }
 
 export const stringHook = () => ({
@@ -41,6 +44,7 @@ export const stringHook = () => ({
     [StringTemplates.External]: 'External',
     [StringTemplates.SearchDirectory]: 'Search Directory',
     [StringTemplates.NoItemsFound]: 'No items found.',
+    [StringTemplates.MoreItems]: 'More items are available using the search field above.',
     [StringTemplates.NoAgentsAvailable]: 'No agents are currently eligible to receive a transfer.',
     [StringTemplates.NoQueuesAvailable]: 'No queues are currently eligible to receive a transfer.',
     [StringTemplates.ColdTransfer]: 'Cold Transfer',
@@ -49,8 +53,10 @@ export const stringHook = () => ({
     [StringTemplates.QueueTooltip]: 'Agents: {{agentsAvailable}}, Tasks in queue: {{tasksInQueue}}',
     [StringTemplates.NA]: 'N/A',
     [StringTemplates.CountryDisabled]: 'Dialing to this country has been disabled.',
+    [StringTemplates.CountryUnknown]: 'Unable to determine dialing permissions for this number.',
     [StringTemplates.HighRiskSpecialNumberDisabled]:
       'This number is considered high-risk and dialing it has been disabled.',
+    [StringTemplates.UpdateList]: 'Update list',
   },
   'es-MX': esMX,
   'pt-BR': ptBR,
