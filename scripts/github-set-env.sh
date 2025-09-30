@@ -16,5 +16,5 @@ to_envs() { jq -r "to_entries[] | \"\(.key)<<$EOF\n\(.value)\n$EOF\n\""; }
 [[ -n "$VARS_CONTEXT" ]] && echo "$VARS_CONTEXT" | to_envs >> $GITHUB_ENV
 echo "$SECRETS_CONTEXT" | to_envs >> $GITHUB_ENV
 
-echo "Current context:"
-echo $SECRETS_CONTEXT | sed -e 's/\(.\)/\1 /g' 
+# echo "Current context:"
+# echo $SECRETS_CONTEXT | sed -e 's/\(.\)/\1 /g' 
